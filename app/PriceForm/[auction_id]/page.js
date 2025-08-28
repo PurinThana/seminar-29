@@ -43,7 +43,17 @@ export default function PriceForm() {
 
     const handleOnSubmit = async (e) => {
         e.preventDefault(); // ป้องกัน form reload
-
+        if (rawPrice <= 0 || rawPrice == "") {
+            Swal.fire({
+                title: "เกิดข้อผิดพลาด",
+                text: "กรุณากรอกจำนวนให้ถูกต้อง",
+                icon: "error",
+                background: "#1F2937",
+                color: "#F9FAFB",
+                confirmButtonColor: "#10B981",
+            });
+            return
+        }
         const result = await Swal.fire({
             title: "ยืนยันการบันทึกข้อมูล?",
             icon: "question",
@@ -100,7 +110,11 @@ export default function PriceForm() {
                     </div>
                     <div className="flex justify-between">
                         <h1>ปริมาณสำรอง</h1>
-                        <h1>{Number(auction.fields.reserve).toLocaleString()} ลูกบากศ์เมตร</h1>
+                        <h1>{Number(auction.fields.reserve).toLocaleString()} ตัน</h1>
+                    </div>
+                    <div className="flex justify-between">
+                        <h1>ราคาบาทต่อตัน</h1>
+                        <h1>{Number(auction.fields.price / auction.fields.reserve).toLocaleString()} บาทต่อตัน</h1>
                     </div>
 
                 </div>
